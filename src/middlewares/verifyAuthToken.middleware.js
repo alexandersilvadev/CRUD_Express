@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const verifyIsAdmMiddleware = (req, res, next) => {
+const verifyAuthToken = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
@@ -12,14 +12,10 @@ const verifyIsAdmMiddleware = (req, res, next) => {
       return res.status(401).json({ message: "Invalid Token" });
     }
 
-    if (!decoded.user.isAdm) {
-      return res.status(401).json({ message: "User is not Adm" });
-    }
-
     req.user = decoded.user;
 
     next();
   });
 };
 
-export default verifyIsAdmMiddleware;
+export default verifyAuthToken;
